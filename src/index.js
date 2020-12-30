@@ -1,14 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+//import root app
+import App from './containers/App';
+import {ConnectedRouter} from 'connected-react-router'
+import 'font-awesome/css/font-awesome.min.css'
+import './assets/css/mixin.scss'
+import './assets/css/style.scss'
+import history from './utils/history'
+
 import reportWebVitals from './reportWebVitals';
 
+const MOUNT_NODE = document.getElementById('root');
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  // <ConnectedRouter history={history}>
+    <App/>,
+  // </ConnectedRouter>,
+  MOUNT_NODE
 );
 
 // If you want to start measuring performance in your app, pass a function
