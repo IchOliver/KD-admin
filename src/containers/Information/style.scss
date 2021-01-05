@@ -1,0 +1,15 @@
+.infoArea {
+    background: #fff;
+    padding-bottom: 30px;
+}
+
+.infoTableWrap {
+    @media (max-width:767px) {
+        padding: 0px 15px;
+
+        .tableHeader {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}

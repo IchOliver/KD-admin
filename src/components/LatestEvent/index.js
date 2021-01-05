@@ -8,7 +8,7 @@ import 'sweetalert/dist/sweetalert.css';
 import {toast} from 'react-toastify'
 
 //json data
-import standList from '../../utils/json/standList'
+import latestList from '../../utils/json/latestList'
 
 // images 
 import deleteUser from '../../images/icon/delete-user.svg'
@@ -16,12 +16,14 @@ import search from '../../images/icon/search.svg'
 import view from '../../images/icon/view.svg'
 import edit from '../../images/icon/edit.svg'
 import blockUser from '../../images/icon/block-user.svg'
+import axios from 'axios'
+import {API_URL} from '../../utils/api'
 import './style.scss'
 
-const searchingFor = search => stand =>
-    stand.title.toLowerCase().includes(search.toLowerCase()) || !search;
+const searchingFor = search => event =>
+    event.title.toLowerCase().includes(search.toLowerCase()) || !search;
 
-class Stand extends Component{
+class LatestEvent extends Component{
     state = {
         search: '',
         pageOfItems: [],
@@ -34,20 +36,24 @@ class Stand extends Component{
         });
     }
     deleteCartHandler = (id) => {
-        let standList = this.state.pageOfItems.filter(item => item.id !== id);
+        let latestList = this.state.pageOfItems.filter(item => item.id !== id);
         this.setState({
-            pageOfItems: standList,
+            pageOfItems: latestList,
             delete: false
         });
         toast.success('user delete successfully')
     };
     suspendedCartHandler = (id) => {
-        let standList = this.state.pageOfItems.filter(item => item.id !== id);
-        this.setState({
-            pageOfItems: standList,
-            suspend: false
-        });
-        toast.success('user suspended successfully')
+      
+        axios.get(`${API_URL}/events-permission/${id}`).then(response=>{
+            console.log("event...",response.data)
+            this.setState({
+                suspend: false
+            })
+         }).catch(error=>{
+      
+         });
+        toast.success('Event suspended successfully')
     };
     onChangePage = (pageOfItems) => {
         this.setState({ pageOfItems: pageOfItems });
@@ -77,11 +83,11 @@ class Stand extends Component{
     render(){
         return(
             <Fragment>
-                <div className="standArea">
-                <Grid className="standTableWrap">
+                <div className="eventArea">
+                <Grid className="eventTableWrap">
                 <Grid className="tableHeader">
-                        <h3 className="title">Stand List</h3>
-                        <TextField
+                        <h3 className="title">Latest Event List</h3>
+                        {/* <TextField
                             variant="outlined"
                             name="search"
                             label="Search"
@@ -99,16 +105,17 @@ class Stand extends Component{
                                     </InputAdornment>
                                 ),
                             }}
-                        />
+                        /> */}
                     </Grid>
                     <Grid className="tableResponsive">
                         <Table className="tableStyle">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Logo</TableCell>
-                                    <TableCell>Site</TableCell>
-                                    <TableCell>Linkein</TableCell>
+                                    <TableCell>Title</TableCell>
+                                    <TableCell>Description</TableCell>
+                                    <TableCell>Time</TableCell>
+                                    <TableCell>Room</TableCell>
+                                    <TableCell>Duration</TableCell>
                                     <TableCell>Activity</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -116,15 +123,14 @@ class Stand extends Component{
                                 {this.state.pageOfItems.filter(searchingFor(this.state.search)).map((item, i) => (
                                     <TableRow key={i}>
                                         <TableCell>{item.title}</TableCell>
-                                        <TableCell>{item.c_logo}</TableCell>
-                                        <TableCell>{item.c_site}</TableCell>
-                                        <TableCell>{item.c_linkedin}</TableCell>
+                                        <TableCell>{item.description}</TableCell>
+                                        <TableCell>{item.time}</TableCell>
+                                        <TableCell>{item.room}</TableCell>
+                                        <TableCell>{item.duration}</TableCell>
                                         <TableCell>
                                             <ul className="activityList">
-                                                <li><Link to={`/company-list-profile/${item.id}`}><img src={view} alt="" /></Link></li>
-                                                <li><Link to={`/company-list-profile-edit/${item.id}`}><img src={edit} alt="" /></Link></li>
+                                                <li><Link to={`/event-list-profile/${item.id}`}><img src={view} alt="" /></Link></li>
                                                 <li onClick={this.suspendModalShow}><img src={blockUser} alt="" /></li>
-                                                <li onClick={this.deleteModalShow}><img src={deleteUser} alt="" /></li>
                                             </ul>
                                             <SweetAlert
                                                 show={this.state.delete}
@@ -159,7 +165,7 @@ class Stand extends Component{
                 </Grid>
                 <Pagination
                   rowShow={5}
-                  items={standList}
+                  items={this.props.latestEvents}
                   onChangePage={this.onChangePage}
                 />
                 </div>
@@ -167,4 +173,4 @@ class Stand extends Component{
         )
     }
 }
-export default Stand;
+export default LatestEvent;

@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom';
 //import root app
 import App from './containers/App';
 import {ConnectedRouter} from 'connected-react-router'
-import 'font-awesome/css/font-awesome.min.css'
-import './assets/css/mixin.scss'
-import './assets/css/style.scss'
 import history from './utils/history'
 
 import reportWebVitals from './reportWebVitals';

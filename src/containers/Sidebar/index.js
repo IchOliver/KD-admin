@@ -10,7 +10,8 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import BookOutlinedIcon from '@material-ui/icons/BookOutlined';
 import EmojiTransportationOutlinedIcon from '@material-ui/icons/EmojiTransportationOutlined';
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import logo from '../../images/logo.png'
 import arrow from '../../images/icon/arrow.svg'
 import ScrollArea from 'react-scrollbar'
@@ -57,9 +58,15 @@ const SidebarNav =(props)=>{
         },
         {
             name:'Setting',
-            icon:SettingsIcon,
+            icon:SettingsOutlinedIcon,
             id:'5',
             link:'/setting'
+        },
+        {
+            name:'Log out',
+            icon:ExitToAppOutlinedIcon,
+            id:'6',
+            link:'/signin'
         }
     ]
     const [expanded, setExpanded] = useState(0);
@@ -72,7 +79,7 @@ const SidebarNav =(props)=>{
           <Grid className='sidebarMainWrapper'>
               <div className="logoSlidebar">
                     <NavLink to="/">
-                        <img src={logo} alt="" style={{width:50,height:50}}/>
+                        <img src={logo} alt="" style={{width:50,height:50,borderRadius:10,marginLeft:40}}/>
                     </NavLink>
               </div>
               <ScrollArea

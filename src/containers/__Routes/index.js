@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {BrowserRouter,Switch,Route} from 'react-router-dom'
+import {BrowserRouter,Switch,Route,Redirect} from 'react-router-dom'
 import PrivateRoute from '../../containers/_PrivateRoute'
 
 
@@ -9,14 +9,23 @@ import Dashboard from '../Dashboard'
 import Company from '../Company'
 import Information from '../Information'
 import Notifcation from '../Notification'
-import Event from '../Stand'
+import Event from '../Event'
 import Stand from '../Stand'
 import Setting from '../Setting'
+import ViewCompany from '../ViewCompany'
+import Signin from '../Signin'
+import { PublicRoute } from '../_PublicRoute'
+import ViewEvent from '../ViewEvent'
 
 const Routes =()=>{
     return(
         <BrowserRouter>
             <Switch>
+             <PublicRoute
+              exact
+              path="/signin"
+              component={Signin}
+             />
              <PrivateRoute
                 exact
                 path="/"
@@ -59,6 +68,19 @@ const Routes =()=>{
                 component={Setting}
                 titles={['Setting']}
                 />
+             <PrivateRoute
+                exact
+                path="/company-list-profile/:id"
+                component={ViewCompany}
+                titles={['View Company']}
+                />
+             <PrivateRoute
+                exact
+                path="/event-list-profile/:id"
+                component={ViewEvent}
+                titles={['View Event']}
+                />
+                <Redirect exact path="/" component={Dashboard}/>
             </Switch>
         </BrowserRouter>
     )

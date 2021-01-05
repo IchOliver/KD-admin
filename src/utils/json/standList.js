@@ -1,0 +1,57 @@
+const standList = [
+    {
+       id:1,
+       title:'Deloitte',
+       c_logo:'',
+       c_location:'',
+       c_site:'https://www.linkedin.com/',
+       c_linkedin:'https://www.linkedin.com/'
+    },
+    {
+        id:2,
+        title:'Deloitte',
+        title:'Deloitte',
+        c_logo:'',
+        c_location:'',
+        c_site:'',
+        c_linkedin:'https://www.linkedin.com/'
+     },
+     {
+        id:3,
+        title:'Deloitte',
+        title:'Deloitte',
+        c_logo:'',
+        c_location:'',
+        c_site:'',
+        c_linkedin:'https://www.linkedin.com/'
+     },
+     {
+        id:4,
+        title:'Deloitte',
+        title:'Deloitte',
+       c_logo:'',
+       c_location:'',
+       c_site:'',
+       c_linkedin:'https://www.linkedin.com/'
+     },
+     {
+        id:5,
+        title:'Deloitte',
+        title:'Deloitte',
+        c_logo:'',
+        c_location:'',
+        c_site:'',
+        c_linkedin:'https://www.linkedin.com/'
+     },
+     {
+        id:6,
+        title:'Deloitte',
+        title:'Deloitte',
+        c_logo:'',
+        c_location:'',
+        c_site:'',
+        c_linkedin:'https://www.linkedin.com/'
+     },
+]
+
+export default standList;

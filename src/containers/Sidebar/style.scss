@@ -12,7 +12,8 @@
         background: linear-gradient(360deg, rgba(98, 88, 251, 0.9) 0.75%, rgba(134, 126, 255, 0.9) 100%);
         min-height: 70px;
         margin-bottom: 40px;
-        text-align: center;
+        text-align: left;
+      
     }
 
     .menuTrigger {
@@ -93,7 +94,7 @@
                 }
 
                 .submenuItems {
-                    padding: 15px 35px;
+                    padding: 15px 75px;
                     list-style: none;
                     margin: 0;
 
