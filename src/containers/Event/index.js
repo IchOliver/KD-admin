@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import Pagination from '../../components/Pagination'
 import SweetAlert from 'sweetalert-react';
 import 'sweetalert/dist/sweetalert.css';
+import axios from 'axios'
 
 import {toast} from 'react-toastify'
-
+import {API_URL} from '../../utils/api'
 //json data
 import latestList from '../../utils/json/latestList'
 
@@ -22,11 +23,28 @@ const searchingFor = search => event =>
     event.title.toLowerCase().includes(search.toLowerCase()) || !search;
 
 class Event extends Component{
-    state = {
-        search: '',
-        pageOfItems: [],
-        delete: false,
-        suspend: false
+    constructor(props){
+        super(props);
+       this.state = {
+            search: '',
+            pageOfItems: [],
+            delete: false,
+            suspend: false,
+            eventsData:[]
+        }
+    }
+   
+    componentDidMount(){
+        console.log("event component")
+        let events=[];
+        axios.get(`${API_URL}/events`).then(response=>{
+          // events.push(response.data.data)
+          this.setState({
+              eventsData:response.data.data
+          })
+         }).catch(error=>{
+      
+         });
     }
     changeHandler = (e) => {
         this.setState({
@@ -42,12 +60,15 @@ class Event extends Component{
         toast.success('user delete successfully')
     };
     suspendedCartHandler = (id) => {
-        let latestList = this.state.pageOfItems.filter(item => item.id !== id);
-        this.setState({
-            pageOfItems: latestList,
-            suspend: false
-        });
-        toast.success('user suspended successfully')
+        axios.get(`${API_URL}/events-permission/${id}`).then(response=>{
+            console.log("event...",response.data)
+            this.setState({
+                suspend: false
+            })
+         }).catch(error=>{
+      
+         });
+        toast.success('Event suspended successfully')
     };
     onChangePage = (pageOfItems) => {
         this.setState({ pageOfItems: pageOfItems });
@@ -124,7 +145,7 @@ class Event extends Component{
                                         <TableCell>
                                             <ul className="activityList">
                                                 <li><Link to={`/event-list-profile/${item.id}`}><img src={view} alt="" /></Link></li>
-                                                <li><Link to={`/company-list-profile-edit/${item.id}`}><img src={edit} alt="" /></Link></li>
+                                                <li><Link to={`/event-list-profile-edit/${item.id}`}><img src={edit} alt="" /></Link></li>
                                                 <li onClick={this.suspendModalShow}><img src={blockUser} alt="" /></li>
                                                 <li onClick={this.deleteModalShow}><img src={deleteUser} alt="" /></li>
                                             </ul>
@@ -161,7 +182,7 @@ class Event extends Component{
                 </Grid>
                 <Pagination
                   rowShow={5}
-                  items={latestList}
+                  items={this.state.eventsData}
                   onChangePage={this.onChangePage}
                 />
                 </div>

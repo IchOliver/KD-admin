@@ -16,6 +16,7 @@ import ViewCompany from '../ViewCompany'
 import Signin from '../Signin'
 import { PublicRoute } from '../_PublicRoute'
 import ViewEvent from '../ViewEvent'
+import EditEvent from '../EditEvent'
 
 const Routes =()=>{
     return(
@@ -79,6 +80,12 @@ const Routes =()=>{
                 path="/event-list-profile/:id"
                 component={ViewEvent}
                 titles={['View Event']}
+                />
+             <PrivateRoute
+                exact
+                path="/event-list-profile-edit/:id"
+                component={EditEvent}
+                titles={['Edit Event']}
                 />
                 <Redirect exact path="/" component={Dashboard}/>
             </Switch>
