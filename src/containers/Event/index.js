@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Grid, Table, TableBody, TableRow, TableHead, TableCell, TextField, InputAdornment, IconButton } from '@material-ui/core'
+import { Grid, Table, TableBody, TableRow, TableHead,Button, TableCell, TextField, InputAdornment, IconButton } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import Pagination from '../../components/Pagination'
 import SweetAlert from 'sweetalert-react';
@@ -57,7 +57,12 @@ class Event extends Component{
             pageOfItems: latestList,
             delete: false
         });
-        toast.success('user delete successfully')
+        axios.get(`${API_URL}/events/delete/${id}`).then(response=>{
+            toast.success('The Event deleted successfully');
+         }).catch(error=>{
+      
+         });
+     
     };
     suspendedCartHandler = (id) => {
         axios.get(`${API_URL}/events-permission/${id}`).then(response=>{
@@ -102,6 +107,9 @@ class Event extends Component{
                 <Grid className="eventTableWrap">
                 <Grid className="tableHeader">
                         <h3 className="title">Event List</h3>
+                        <div style={{display:'flex'}}>
+
+                       
                         <TextField
                             variant="outlined"
                             name="search"
@@ -121,6 +129,11 @@ class Event extends Component{
                                 ),
                             }}
                         />
+                          <Link to={`/event-add`}>
+                            <Button className="btnStyle">Add</Button>
+                          </Link>
+                       
+                          </div>
                     </Grid>
                     <Grid className="tableResponsive">
                         <Table className="tableStyle">

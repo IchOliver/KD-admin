@@ -17,6 +17,7 @@ import Signin from '../Signin'
 import { PublicRoute } from '../_PublicRoute'
 import ViewEvent from '../ViewEvent'
 import EditEvent from '../EditEvent'
+import AddEvent from '../AddEvent'
 
 const Routes =()=>{
     return(
@@ -86,6 +87,12 @@ const Routes =()=>{
                 path="/event-list-profile-edit/:id"
                 component={EditEvent}
                 titles={['Edit Event']}
+                />
+            <PrivateRoute
+                exact
+                path="/event-add"
+                component={AddEvent}
+                titles={['Add Event']}
                 />
                 <Redirect exact path="/" component={Dashboard}/>
             </Switch>

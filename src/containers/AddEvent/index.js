@@ -9,9 +9,8 @@ import {API_URL,Image_URL} from '../../utils/api';
 import "./style.scss";
 import axios from "axios";
 
-class EditEvent extends Component {
+class AddEvent extends Component {
   state = {
-    id:0,
     title: "",
     duration: "",
     imagePreviewUrl: "",
@@ -25,21 +24,21 @@ class EditEvent extends Component {
     changed: false,
   };
   componentDidMount() {
-    const id =this.props.match.params.id;
-    this.setState({id:id})
-    axios.get(`${API_URL}/events/${id}`).then(response=>{
-      const eventObject= response.data;
-       this.setState({
-         title:eventObject.title,
-         description:eventObject.description,
-         room:eventObject.room,
-         time:eventObject.time,
-         duration:eventObject.duration,
-         imagePreviewUrl:`${Image_URL}/${eventObject.logo}`,
-         locationImageUrl:`${Image_URL}/${eventObject.location_image}`,
-         view_map:eventObject.view_map
-       })
-    })
+    //const id =this.props.match.params.id;
+  
+    // axios.get(`${API_URL}/events/${id}`).then(response=>{
+    //   const eventObject= response.data;
+    //    this.setState({
+    //      title:eventObject.title,
+    //      description:eventObject.description,
+    //      room:eventObject.room,
+    //      time:eventObject.time,
+    //      duration:eventObject.duration,
+    //      imagePreviewUrl:`${Image_URL}/${eventObject.logo}`,
+    //      locationImageUrl:`${Image_URL}/${eventObject.location_image}`,
+    //      view_map:eventObject.view_map
+    //    })
+    // })
     
 }
   
@@ -80,32 +79,38 @@ createFormData =(data)=>{
 }
 submitHandler = (e) => {
     e.preventDefault();
-   const {id,title,duration,logo,location,room,time,description,view_map} = this.state
-   const bodyFormData = new FormData();
-   bodyFormData.append('id',id)
-   bodyFormData.append('title',title);
-   bodyFormData.append('duration',duration);
-   bodyFormData.append('description',description);
-   bodyFormData.append('time',time);
-   bodyFormData.append('room',room);
-   bodyFormData.append('locationImage',location); 
-   bodyFormData.append('view_map',view_map);
-   bodyFormData.append('logo',logo);
-   bodyFormData.append('permission','0');
-
-   axios.post(`${API_URL}/events-update`,bodyFormData,{
-     headers:{
-      'Accept':'application/json',
-      'Content-Type':'multipart/form-data'
-     }
-   })
-   .then(response=>{
-       toast.success(response.data.messsage);
-    
-   })
-   .catch(error=>{
-
-   })
+   const {title,duration,logo,location,room,time,description,view_map} = this.state
+   if(logo ==null && location ==null){
+    toast.error('Please upload Images correctly.')
+  }
+  else{
+    const bodyFormData = new FormData();
+    bodyFormData.append('title',title);
+    bodyFormData.append('duration',duration);
+    bodyFormData.append('description',description);
+    bodyFormData.append('time',time);
+    bodyFormData.append('room',room);
+    bodyFormData.append('locationImage',location); 
+    bodyFormData.append('view_map',view_map);
+    bodyFormData.append('logo',logo);
+    bodyFormData.append('permission','0');
+   
+    axios.post(`${API_URL}/events-store`,bodyFormData,{
+      headers:{
+       'Accept':'application/json',
+       'Content-Type':'multipart/form-data'
+      }
+    })
+    .then(response=>{
+       
+        toast.success(response.data.messsage);
+     
+    })
+    .catch(error=>{
+ 
+    })
+  }
+  
 }
   render() {
     return (
@@ -250,4 +255,4 @@ submitHandler = (e) => {
   }
 }
 
-export default EditEvent;
+export default AddEvent;
